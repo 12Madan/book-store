@@ -59,9 +59,9 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://ep-throbbing-forest-32723453.us-east-2.aws.neon.tech/book-store?user=rajureddy2.konga&password=5qdhElns1SDM
-    username: rajureddy2.konga
-    password: 5qdhElns1SDM
+    url: jdbc:postgresql://neondb_owner:npg_zLrV7thTb6kJ@ep-shiny-block-ah9i221w-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+    username: neondb_owner
+    password: npg_zLrV7thTb6kJ
 ---
 
 spring:
