@@ -57,7 +57,7 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:postgresql://ep-shiny-block-ah9i221w-pooler.c-3.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_zLrV7thTb6kJ&sslmode=require&channelBinding=require
+    url: jdbc:postgresql://ep-shiny-block-ah9i221w-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
     username: neondb_owner
     password: npg_zLrV7thTb6kJ
   h2:
