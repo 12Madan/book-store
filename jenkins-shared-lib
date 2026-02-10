@@ -38,12 +38,12 @@ pipeline {
 
         stage('Docker Build & Push') {
             steps {
-                dockerBuildPush(
-                    params.MICROSERVICE,
-                    IMAGE_TAG,
-                    'dockerhub-creds',
-                    params.DOCKER_BUILD
-                )
+               dockerBuildPush([
+    msname: params.MICROSERVICE,
+    imageTag: IMAGE_TAG,
+    credentialsId: 'dockerhub-creds',
+    shouldBuild: params.DOCKER_BUILD
+])
             }
         }
 
