@@ -1,0 +1,63 @@
+@Library('jenkins-shared-library') _
+
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'REPO_URL', defaultValue: 'https://github.com/12Madan/book-store.git')
+        string(name: 'BRANCH', defaultValue: 'master')
+        string(name: 'MICROSERVICE', defaultValue: 'bookstore')
+        string(name: 'VERSION', defaultValue: '1.0.0')
+        booleanParam(name: 'DOCKER_BUILD', defaultValue: true)
+        booleanParam(name: 'DEPLOY', defaultValue: true)
+    }
+
+    environment {
+        IMAGE_TAG = "${params.VERSION}"
+    }
+
+    stages {
+
+        stage('Clean Workspace') {
+            steps { cleanWorkspace() }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                checkoutCode([
+                    repoUrl: params.REPO_URL,
+                    branch: params.BRANCH,
+                    credentialsId: 'github-creds'
+                ])
+            }
+        }
+
+        stage('Maven Build') {
+            steps { mavenBuild(params.MICROSERVICE) }
+        }
+
+        stage('Docker Build & Push') {
+            steps {
+                dockerBuildPush(
+                    params.MICROSERVICE,
+                    IMAGE_TAG,
+                    'dockerhub-creds',
+                    params.DOCKER_BUILD
+                )
+            }
+        }
+
+        stage('Deploy (Dummy)') {
+            steps {
+                deployService(
+                    'book-store-deploy-k8s',
+                    [
+                        microservice: params.MICROSERVICE,
+                        version: params.VERSION
+                    ],
+                    params.DEPLOY
+                )
+            }
+        }
+    }
+}
