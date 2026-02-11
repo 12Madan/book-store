@@ -1,0 +1,23 @@
+name: Workspace Clean Job
+
+on:
+  workflow_dispatch:  
+  push:
+    branches: [ "master" ]
+
+jobs:
+  clean-workspace:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clean Workspace
+        run: |
+          echo "Cleaning workspace..."
+          rm -rf $GITHUB_WORKSPACE/*
+          rm -rf $GITHUB_WORKSPACE/.[!.]* || true
+          rm -rf $GITHUB_WORKSPACE/..?* || true
+          echo "Workspace cleaned."
+
+      - name: Confirm Cleanup
+        run: ls -la $GITHUB_WORKSPACE
+
